@@ -45,13 +45,15 @@ var settings = module.exports = {
     // You can protect the user interface with a userid and password by using the following property
     // the password must be an md5 hash  eg.. 5f4dcc3b5aa765d61d8327deb882cf99 ('password')
     //httpAdminAuth: {user:"user",pass:"5f4dcc3b5aa765d61d8327deb882cf99"},
-    
+
     requireHttps: true,
 
     // Serve up the welcome page
     httpStatic: path.join(__dirname,"public"),
 
-    functionGlobalContext: { },
+    functionGlobalContext: {
+      crc: require('crc')
+    },
 
     storageModule: require("./couchstorage")
 }
@@ -89,7 +91,5 @@ if (!couchService) {
         console.log(" - using NODE_RED_STORAGE_NAME environment variable: "+process.env.NODE_RED_STORAGE_NAME);
     }
     throw new Error("No cloudant service found");
-}    
+}
 settings.couchUrl = couchService.credentials.url;
-
-
